@@ -108,7 +108,7 @@ Para que o formulário de cadastro funcione corretamente, é necessário adicion
                             // mensagem de cep não encontrado
                             return;
                         }
-                        $("#inputAddress").val(data.logradouro);
+                        $("#InputAddress").val(data.logradouro);
                         $("#InputCity").val(data.localidade);
                         $("#InputState").val(data.uf);
                     },
