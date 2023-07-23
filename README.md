@@ -89,6 +89,41 @@ O projeto utiliza a arquitetura Modelo-Visão-Controlador (MVC), que organiza a 
 
 A estrutura de diretórios do projeto segue a convenção do Laravel para manter a organização do código.
 
+## Script para busca de CEP
+
+Para que o formulário de cadastro funcione corretamente, é necessário adicionar o seguinte script no final da página, antes do fechamento da tag `</body>`. Esse script utiliza jQuery para realizar uma requisição AJAX à API ViaCEP e preencher automaticamente os campos de endereço com base no CEP fornecido pelo usuário:
+
+```html
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#InputZip").keyup(function () {
+            var cep = $(this).val().replace(/\D/g, '');
+            if (cep.length === 8) {
+                $.ajax({
+                    url: "https://viacep.com.br/ws/" + cep + "/json/",
+                    type: "GET",
+                    success: function (data) {
+                        if (data.erro) {
+                            // mensagem de cep não encontrado
+                            return;
+                        }
+                        $("#inputAddress").val(data.logradouro);
+                        $("#InputCity").val(data.localidade);
+                        $("#InputState").val(data.uf);
+                    },
+                    error: function () {
+                        // mensagem de erro ao buscar o cep
+                    }
+                });
+            }
+        });
+    });
+</script>
+```
+
+Certifique-se de que o campo de entrada do CEP no formulário tenha o ID `InputZip` e que os campos de logradouro, cidade e estado tenham os IDs `inputAddress`, `InputCity` e `InputState`, respectivamente. Caso esses IDs já estejam sendo usados em sua implementação, ajuste o script conforme necessário.
+
 ## Contribuindo
 
 Se desejar contribuir com o projeto, sinta-se à vontade para criar uma *issue* ou enviar um *pull request*.
@@ -97,4 +132,4 @@ Esperamos que este projeto seja útil e que você possa aprender com ele!
 
 ## Agradecimentos
 
-Agradecemos à comunidade do Laravel e tambem a plataforma DIO e aos mantenedores da API ViaCEP por disponibilizarem suas ferramentas e recursos que tornaram possível o desenvolvimento deste projeto.
+Agradecemos à comunidade do Laravel e também à plataforma DIO e aos mantenedores da API ViaCEP por disponibilizarem suas ferramentas e recursos que tornaram possível o desenvolvimento deste projeto.
