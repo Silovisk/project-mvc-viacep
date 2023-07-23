@@ -15,4 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\AddressController@index')->name('home');
 
+Route::get('/adicionar', 'App\Http\Controllers\AddressController@adicionar')->name('adicionar');
+
 Route::get('/searchZip', 'App\Http\Controllers\AddressController@searchZip')->name('searchZip');
+
+
+Route::post('/salvar', 'App\Http\Controllers\AddressController@salvar')->name('salvar');
